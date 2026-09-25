@@ -1,8 +1,8 @@
 ### Hi, I'm Nahum
 
-Infra engineer at [Wix](https://www.wix.com), Dublin. I run a multi-region Kubernetes platform for untrusted user code, one site per gVisor sandbox.
+Infra engineer at [Wix](https://www.wix.com), Dublin. I keep a multi-region Kubernetes platform for untrusted user code running: isolation, cold starts, scaling, cost and on-call, one site per gVisor sandbox.
 
-I trace production hangs into containerd and gVisor, then fix them upstream.
+When the bug is in open source, I fix it upstream.
 
 ```mermaid
 %%{init: {"themeVariables": {"fontSize": "18px"}}}%%
