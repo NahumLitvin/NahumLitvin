@@ -36,4 +36,8 @@ flowchart LR
 | [Recover missed systrap interrupts and kill only the stuck subprocess, so a wedged task can't block sandbox teardown](https://github.com/google/gvisor/pull/14201) | merged |
 | [Document inotify behaviour on shared volumes](https://github.com/google/gvisor/pull/11563) | merged |
 
+| [SOCI snapshotter](https://github.com/awslabs/soci-snapshotter) | |
+|---|---|
+| [Close the span cache reader in file Verify so pod-start bursts can't leak the snapshotter past its fd limit](https://github.com/awslabs/soci-snapshotter/pull/2043) | merged |
+
 [LinkedIn](https://www.linkedin.com/in/lnahum)
