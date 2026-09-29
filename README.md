@@ -1,8 +1,8 @@
 ### Hi, I'm Nahum
 
-Infra engineer at [Wix](https://www.wix.com), Dublin. I keep a multi-region Kubernetes platform for untrusted user code running: isolation, cold starts, scaling, cost and on-call, one site per gVisor sandbox.
+Technical Lead - DevOps Engineering at [Wix](https://www.wix.com), Dublin. I keep a multi-region Kubernetes platform for untrusted user code running: isolation, cold starts, scaling, cost and on-call, one site per gVisor sandbox.
 
-When the bug is in open source, I fix it upstream.
+When the bug is in open source, I fix it upstream, and I write up how I found it at [catchkill9.dev](https://www.catchkill9.dev).
 
 ```mermaid
 %%{init: {"themeVariables": {"fontSize": "18px"}}}%%
@@ -40,4 +40,16 @@ flowchart LR
 |---|---|
 | [Close the span cache reader in file Verify so pod-start bursts can't leak the snapshotter past its fd limit](https://github.com/awslabs/soci-snapshotter/pull/2043) | merged |
 
-[LinkedIn](https://www.linkedin.com/in/lnahum)
+| [Security Profiles Operator](https://github.com/kubernetes-sigs/security-profiles-operator) | |
+|---|---|
+| [Handle AppArmorProfile owners in node status, my first upstream PR](https://github.com/kubernetes-sigs/security-profiles-operator/pull/1994) | merged |
+
+All of it with the backstory: [catchkill9.dev/oss](https://www.catchkill9.dev/oss.html)
+
+### Latest posts
+
+- [One lost signal, five days stuck, 45,000 frozen threads: fixing a gVisor hang upstream](https://www.catchkill9.dev/posts/gvisor-one-lost-signal.html)
+- [containerd part 3: the fix got reverted](https://www.catchkill9.dev/posts/containerd-part-3-reverted.html)
+- [containerd part 2: 17 lines, 40 days, 30 reviews](https://www.catchkill9.dev/posts/containerd-part-2-17-lines.html)
+
+[Blog](https://www.catchkill9.dev) · [LinkedIn](https://www.linkedin.com/in/lnahum/) · [dev.to](https://dev.to/nahumlitvin) · [RSS](https://www.catchkill9.dev/rss.xml)
