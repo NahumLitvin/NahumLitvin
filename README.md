@@ -32,6 +32,7 @@ flowchart LR
 
 | [gVisor](https://github.com/google/gvisor) | |
 |---|---|
+| [Keep resending to a slow stub instead of killing it, so a long host page fault can't take down a healthy sandbox](https://github.com/google/gvisor/pull/15182) | open |
 | [30s deadlines on runsc Kill, Stats and Status so a wedged sandbox can't hold the shim lock forever](https://github.com/google/gvisor/pull/14549) | merged |
 | [Recover missed systrap interrupts and kill only the stuck subprocess, so a wedged task can't block sandbox teardown](https://github.com/google/gvisor/pull/14201) | merged |
 | [Document inotify behaviour on shared volumes](https://github.com/google/gvisor/pull/11563) | merged |
