@@ -49,8 +49,8 @@ All of it with the backstory: [catchkill9.dev/oss](https://www.catchkill9.dev/os
 
 ### Latest posts
 
-- [One lost signal, five days stuck, 45,000 frozen threads: fixing a gVisor hang upstream](https://www.catchkill9.dev/posts/gvisor-one-lost-signal.html)
-- [containerd part 3: the fix got reverted](https://www.catchkill9.dev/posts/containerd-part-3-reverted.html)
-- [containerd part 2: 17 lines, 40 days, 30 reviews](https://www.catchkill9.dev/posts/containerd-part-2-17-lines.html)
+- [Pod stuck in Terminating: what it is actually waiting for](https://www.catchkill9.dev/posts/pod-stuck-in-terminating.html)
+- [Mermaid charts in Claude Code's terminal: what a mod could do that my VS Code harness couldn't](https://www.catchkill9.dev/posts/prismantis.html)
+- [A zero timeout in Go is not no timeout](https://www.catchkill9.dev/posts/go-zero-timeout-is-expired.html)
 
 [Blog](https://www.catchkill9.dev) · [LinkedIn](https://www.linkedin.com/in/lnahum/) · [dev.to](https://dev.to/nahumlitvin) · [RSS](https://www.catchkill9.dev/rss.xml)
