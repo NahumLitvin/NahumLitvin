@@ -1,6 +1,6 @@
 ### Hi, I'm Nahum
 
-I keep a Kubernetes platform at [Wix](https://www.wix.com) running that executes code other people wrote. About 2.5% of the websites out there, one site per gVisor sandbox. Dublin.
+[Wix](https://www.wix.com) runs about 2.5% of the websites out there. When a site owner writes their own backend code, it runs on the Kubernetes platform I keep running, one site per gVisor sandbox. Dublin.
 
 Untrusted code finds every crack. When a pod hangs and the cause isn't ours, I follow it down the stack until I find whose bug it is. Usually it's open source, so I fix it there and [write up how I found it](https://www.catchkill9.dev).
 
