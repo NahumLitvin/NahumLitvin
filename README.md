@@ -5,12 +5,12 @@ Technical Lead - DevOps Engineering at [Wix](https://www.wix.com), Dublin. I kee
 When the bug is in open source, I fix it upstream, and I write up how I found it at [catchkill9.dev](https://www.catchkill9.dev).
 
 ```mermaid
-%%{init: {"themeVariables": {"fontSize": "18px"}}}%%
-flowchart LR
+flowchart TD
   kubelet -->|CRI| ctr["containerd"]
   ctr --> shim["gVisor shim"]
   shim --> sandbox
   subgraph sandbox["Pod sandbox, one site"]
+    direction LR
     code["Untrusted<br/>user code"] -->|syscalls| sentry["gVisor Sentry"]
   end
   sentry --> kernel["Host kernel"]
