@@ -1,51 +1,49 @@
 ### Hi, I'm Nahum
 
-Technical Lead - DevOps Engineering at [Wix](https://www.wix.com), Dublin. I keep a multi-region Kubernetes platform for untrusted user code running: isolation, cold starts, scaling, cost and on-call, one site per gVisor sandbox.
+I keep a Kubernetes platform at [Wix](https://www.wix.com) running that executes code other people wrote. About 2.5% of the websites out there, one site per gVisor sandbox. Dublin.
 
-When the bug is in open source, I fix it upstream, and I write up how I found it at [catchkill9.dev](https://www.catchkill9.dev).
+Untrusted code finds every crack. When a pod hangs and the cause isn't ours, I follow it down the stack until I find whose bug it is. Usually it's open source, so I fix it there and [write up how I found it](https://www.catchkill9.dev).
+
+This is the stack, and where it broke on me:
 
 ```mermaid
 flowchart TD
-  kubelet -->|CRI| ctr["containerd"]
-  ctr --> shim["gVisor shim"]
+  ms["metrics-server<br/><i>one slow scrape, node gone</i>"] -.-> kubelet
+  kubelet -->|CRI| ctr["containerd<br/><i>snapshotter hung, node still Ready</i>"]
+  ctr --> soci["SOCI snapshotter<br/><i>fd leak on pod-start bursts</i>"]
+  ctr --> shim["gVisor shim<br/><i>wedged sandbox held the lock</i>"]
   shim --> sandbox
   subgraph sandbox["Pod sandbox, one site"]
     direction LR
-    code["Untrusted<br/>user code"] -->|syscalls| sentry["gVisor Sentry"]
+    code["Untrusted<br/>user code"] -->|syscalls| sentry["gVisor Sentry<br/><i>stuck stub, no teardown</i>"]
   end
   sentry --> kernel["Host kernel"]
   style sandbox fill:#fff8e1,stroke:#bf8700,color:#4d2d00
   style code fill:#fff1c2,stroke:#bf8700,color:#4d2d00
+  style ms fill:#326ce5,stroke:#1f4fb4,color:#ffffff
   style kubelet fill:#326ce5,stroke:#1f4fb4,color:#ffffff
   style ctr fill:#8250df,stroke:#5e34a8,color:#ffffff
+  style soci fill:#8250df,stroke:#5e34a8,color:#ffffff
   style shim fill:#8250df,stroke:#5e34a8,color:#ffffff
   style sentry fill:#8250df,stroke:#5e34a8,color:#ffffff
   style kernel fill:#1a7f37,stroke:#0f5323,color:#ffffff
 ```
 
-### Upstream
+Nodes said Ready while no new pod could start. A snapshotter had hung and containerd's snapshot GC waited on it forever. My fix [bounded the GC](https://github.com/containerd/containerd/pull/13799), got merged, then got reverted because maintainers wanted it fixed on the client side. Fair. The [deadline on proxy snapshotter calls](https://github.com/containerd/containerd/pull/14187) went in instead.
 
-| [containerd](https://github.com/containerd/containerd) | |
-|---|---|
-| [Bound snapshot GC so a hung snapshotter can't block new pods while the node still reports Ready](https://github.com/containerd/containerd/pull/13799) | merged, then reverted for a client-side fix |
-| [Configurable deadline on proxy snapshotter calls so one hung call can't block the whole snapshotter](https://github.com/containerd/containerd/pull/14187) | open |
+Pod-start bursts leaked file descriptors in the SOCI snapshotter until it hit its limit. One reader in file Verify never got closed. [Now it does](https://github.com/awslabs/soci-snapshotter/pull/2043).
 
-| [gVisor](https://github.com/google/gvisor) | |
-|---|---|
-| [Keep resending to a slow stub instead of killing it, so a long host page fault can't take down a healthy sandbox](https://github.com/google/gvisor/pull/15182) | open |
-| [30s deadlines on runsc Kill, Stats and Status so a wedged sandbox can't hold the shim lock forever](https://github.com/google/gvisor/pull/14549) | merged |
-| [Recover missed systrap interrupts and kill only the stuck subprocess, so a wedged task can't block sandbox teardown](https://github.com/google/gvisor/pull/14201) | merged |
-| [Document inotify behaviour on shared volumes](https://github.com/google/gvisor/pull/11563) | merged |
+gVisor is where most of my time goes. A wedged sandbox could hold the shim lock forever, so runsc Kill, Stats and Status [got 30s deadlines](https://github.com/google/gvisor/pull/14549). A missed systrap interrupt could block teardown, so now [only the stuck subprocess dies](https://github.com/google/gvisor/pull/14201), not the sandbox. [The last indefinite waits](https://github.com/google/gvisor/pull/15194) are still in review.
 
-| [SOCI snapshotter](https://github.com/awslabs/soci-snapshotter) | |
-|---|---|
-| [Close the span cache reader in file Verify so pod-start bursts can't leak the snapshotter past its fd limit](https://github.com/awslabs/soci-snapshotter/pull/2043) | merged |
+One slow kubelet scrape makes metrics-server drop the whole node from `kubectl top`. [Open](https://github.com/kubernetes-sigs/metrics-server/pull/1908).
 
-| [Security Profiles Operator](https://github.com/kubernetes-sigs/security-profiles-operator) | |
-|---|---|
-| [Handle AppArmorProfile owners in node status, my first upstream PR](https://github.com/kubernetes-sigs/security-profiles-operator/pull/1994) | merged |
+It started smaller: [AppArmorProfile owners in the Security Profiles Operator](https://github.com/kubernetes-sigs/security-profiles-operator/pull/1994), 2023.
 
-All of it with the backstory: [catchkill9.dev/oss](https://www.catchkill9.dev/oss.html)
+### On the side
+
+I built a whole VS Code wrapper just to see mermaid diagrams in Claude Code replies. Then I found out a mod could do it in the terminal. That became prismantis.
+
+[![prismantis](https://raw.githubusercontent.com/NahumLitvin/prismantis/main/docs/brand/banner.png)](https://github.com/NahumLitvin/prismantis)
 
 ### Latest posts
 
