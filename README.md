@@ -11,12 +11,8 @@ flowchart TD
   kubelet["kubelet + metrics-server<br/><i>one slow scrape, node gone</i>"] -->|CRI| ctr["containerd<br/><i>snapshotter hung, node still Ready</i>"]
   ctr --> shim["gVisor shim<br/><i>wedged sandbox held the lock</i>"]
   ctr --> soci["SOCI snapshotter<br/><i>fd leak on pod-start bursts</i>"]
-  shim --> sandbox
-  subgraph sandbox["Pod sandbox: one site's untrusted code"]
-    sentry["gVisor Sentry<br/><i>stuck stub, no teardown</i>"]
-  end
-  sandbox -->|syscalls| kernel["Host kernel"]
-  style sandbox fill:#fff8e1,stroke:#bf8700,color:#4d2d00
+  shim --> sentry["gVisor Sentry, one site per sandbox<br/><i>stuck stub, no teardown</i>"]
+  sentry -->|syscalls| kernel["Host kernel"]
   style kubelet fill:#326ce5,stroke:#1f4fb4,color:#ffffff
   style ctr fill:#8250df,stroke:#5e34a8,color:#ffffff
   style soci fill:#8250df,stroke:#5e34a8,color:#ffffff
