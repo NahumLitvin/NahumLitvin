@@ -15,7 +15,7 @@ flowchart TD
   subgraph sandbox["Pod sandbox: one site's untrusted code"]
     sentry["gVisor Sentry<br/><i>stuck stub, no teardown</i>"]
   end
-  sentry -->|syscalls| kernel["Host kernel"]
+  sandbox -->|syscalls| kernel["Host kernel"]
   style sandbox fill:#fff8e1,stroke:#bf8700,color:#4d2d00
   style kubelet fill:#326ce5,stroke:#1f4fb4,color:#ffffff
   style ctr fill:#8250df,stroke:#5e34a8,color:#ffffff
