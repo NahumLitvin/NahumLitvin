@@ -4,23 +4,6 @@
 
 Untrusted code finds every crack. When a pod hangs and the cause isn't ours, I follow it down the stack until I find whose bug it is. Usually it's open source, so I fix it there and [write up how I found it](https://www.catchkill9.dev).
 
-This is the stack, and where it broke on me:
-
-```mermaid
-flowchart TD
-  kubelet["kubelet + metrics-server<br/><i>one slow scrape, node gone</i>"] -->|CRI| ctr["containerd<br/><i>snapshotter hung, node still Ready</i>"]
-  ctr --> shim["gVisor shim<br/><i>wedged sandbox held the lock</i>"]
-  ctr --> soci["SOCI snapshotter<br/><i>fd leak on pod-start bursts</i>"]
-  shim --> sentry["gVisor Sentry, one site per sandbox<br/><i>stuck stub, no teardown</i>"]
-  sentry -->|syscalls| kernel["Host kernel"]
-  style kubelet fill:#326ce5,stroke:#1f4fb4,color:#ffffff
-  style ctr fill:#8250df,stroke:#5e34a8,color:#ffffff
-  style soci fill:#8250df,stroke:#5e34a8,color:#ffffff
-  style shim fill:#8250df,stroke:#5e34a8,color:#ffffff
-  style sentry fill:#8250df,stroke:#5e34a8,color:#ffffff
-  style kernel fill:#1a7f37,stroke:#0f5323,color:#ffffff
-```
-
 
 containerd once let nodes say Ready while no new pod could start. A snapshotter had hung and the snapshot GC waited on it forever. My fix [bounded the GC](https://github.com/containerd/containerd/pull/13799), got merged, then got reverted because maintainers wanted it fixed on the client side. Fair. The [deadline on proxy snapshotter calls](https://github.com/containerd/containerd/pull/14187) went in instead.
 
