@@ -43,7 +43,9 @@ It started smaller: [AppArmorProfile owners in the Security Profiles Operator](h
 
 [![prismantis](https://raw.githubusercontent.com/NahumLitvin/prismantis/main/docs/brand/banner.png)](https://github.com/NahumLitvin/prismantis)
 
-My Claude Code mod. It draws replies in color right in the terminal: tables, code with copy buttons, mermaid diagrams and charts, 15 themes. It went public on October 2, and in its first 9 days it picked up 75 stars and PRs from 7 other people. [![stars](https://img.shields.io/github/stars/NahumLitvin/prismantis?style=flat-square&color=c6a0f6)](https://github.com/NahumLitvin/prismantis/stargazers)
+My Claude Code mod. It draws replies in color right in the terminal: tables, code with copy buttons, mermaid diagrams and charts, 15 themes. Public since October 2, 2026.
+
+[![stars](https://img.shields.io/github/stars/NahumLitvin/prismantis?style=for-the-badge&color=c6a0f6&logo=github)](https://github.com/NahumLitvin/prismantis/stargazers) [![contributors](https://img.shields.io/github/contributors/NahumLitvin/prismantis?style=for-the-badge&color=8bd5ca)](https://github.com/NahumLitvin/prismantis/graphs/contributors) [![forks](https://img.shields.io/github/forks/NahumLitvin/prismantis?style=for-the-badge&color=8aadf4)](https://github.com/NahumLitvin/prismantis/forks) [![last commit](https://img.shields.io/github/last-commit/NahumLitvin/prismantis?style=for-the-badge&color=f5a97f)](https://github.com/NahumLitvin/prismantis/commits/main)
 
 It started because I'd built a whole VS Code wrapper just to see mermaid diagrams in Claude Code replies. A mod turned out to be the better way.
 
