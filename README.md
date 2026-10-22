@@ -9,7 +9,7 @@ containerd once let nodes say Ready while no new pod could start. A snapshotter 
 
 The SOCI snapshotter leaked file descriptors on pod-start bursts until it hit its limit. One reader in file Verify never got closed. [Now it does](https://github.com/awslabs/soci-snapshotter/pull/2043).
 
-gVisor is where most of my time goes. A wedged sandbox could hold the shim lock forever, so runsc Kill, Stats and Status [got 30s deadlines](https://github.com/google/gvisor/pull/14549). A missed systrap interrupt could block teardown, so now [only the stuck subprocess dies](https://github.com/google/gvisor/pull/14201), not the sandbox. [The last indefinite waits](https://github.com/google/gvisor/pull/15194) are still in review.
+gVisor is where most of my time goes. A wedged sandbox could hold the shim lock forever, so runsc Kill, Stats and Status [got 30s deadlines](https://github.com/google/gvisor/pull/14549). A missed systrap interrupt could block teardown, so now [only the stuck subprocess dies](https://github.com/google/gvisor/pull/14201), not the sandbox. A small random memory gap could park the spinning queue on a thread stack, so the queue [moves with the gap now](https://github.com/google/gvisor/pull/15573). [The last indefinite waits](https://github.com/google/gvisor/pull/15194) are still in review.
 
 metrics-server drops the whole node from `kubectl top` after one slow kubelet scrape. [Open](https://github.com/kubernetes-sigs/metrics-server/pull/1908).
 
@@ -27,8 +27,8 @@ It started because I'd built a whole VS Code wrapper just to see mermaid diagram
 
 ### Latest posts
 
-- [Pod stuck in Terminating: what it is actually waiting for](https://www.catchkill9.dev/posts/pod-stuck-in-terminating.html)
-- [Mermaid charts in Claude Code's terminal: what a mod could do that my VS Code harness couldn't](https://www.catchkill9.dev/posts/prismantis.html)
-- [A zero timeout in Go is not no timeout](https://www.catchkill9.dev/posts/go-zero-timeout-is-expired.html)
+- [My fix for this hang was already running. The sandbox hung anyway.](https://www.catchkill9.dev/posts/gvisor-spinning-queue-gap.html)
+- [gVisor, a kernel in Go: what sits between untrusted code and Linux](https://www.catchkill9.dev/posts/intro-gvisor-a-kernel-in-go.html)
+- [STPA-inspired questions tied a plain checklist in my coding agent. Their one win: Claude asking about timing.](https://www.catchkill9.dev/posts/stpa-in-my-agent.html)
 
 [Blog](https://www.catchkill9.dev) · [LinkedIn](https://www.linkedin.com/in/lnahum/) · [dev.to](https://dev.to/nahumlitvin) · [RSS](https://www.catchkill9.dev/rss.xml)
