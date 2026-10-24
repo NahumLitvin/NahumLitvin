@@ -1,20 +1,22 @@
 ### Hi, I'm Nahum
 
-[Wix](https://www.wix.com) runs about 2.5% of the websites out there. When a site owner writes their own backend code, it runs on the Kubernetes platform I keep running, one site per gVisor sandbox. Dublin.
+[Wix](https://www.wix.com) runs about 2.5% of the websites out there. When a site owner writes backend code, it runs on the Kubernetes platform I keep alive, one site per gVisor sandbox. Untrusted code finds every crack. Dublin.
 
-Untrusted code finds every crack. When a pod hangs and the cause isn't ours, I follow it down the stack until I find whose bug it is. Usually it's open source, so I fix it there and [write up how I found it](https://www.catchkill9.dev).
+When a pod hangs and it isn't our bug, I go find whose it is.
 
+Once, containerd nodes said Ready while no new pod could start. A snapshotter had hung, and snapshot GC waited on it forever. I [bounded the GC](https://github.com/containerd/containerd/pull/13799). It got merged. Then it got reverted, because the maintainers wanted it fixed on the client side. Fair. So I [put the deadline there](https://github.com/containerd/containerd/pull/14187), and that one stuck.
 
-containerd once let nodes say Ready while no new pod could start. A snapshotter had hung and the snapshot GC waited on it forever. My fix [bounded the GC](https://github.com/containerd/containerd/pull/13799), got merged, then got reverted because maintainers wanted it fixed on the client side. Fair. The [deadline on proxy snapshotter calls](https://github.com/containerd/containerd/pull/14187) went in instead.
+Most hunts end like that: a fix upstream and a [write-up of how I found it](https://www.catchkill9.dev).
 
-The SOCI snapshotter leaked file descriptors on pod-start bursts until it hit its limit. One reader in file Verify never got closed. [Now it does](https://github.com/awslabs/soci-snapshotter/pull/2043).
+**Other cracks, fixed upstream**
 
-gVisor is where most of my time goes. A wedged sandbox could hold the shim lock forever, so runsc Kill, Stats and Status [got 30s deadlines](https://github.com/google/gvisor/pull/14549). A missed systrap interrupt could block teardown, so now [only the stuck subprocess dies](https://github.com/google/gvisor/pull/14201), not the sandbox. A small random memory gap could park the spinning queue on a thread stack, so the queue [moves with the gap now](https://github.com/google/gvisor/pull/15573). [The last indefinite waits](https://github.com/google/gvisor/pull/15194) are still in review.
-
-metrics-server drops the whole node from `kubectl top` after one slow kubelet scrape. [Open](https://github.com/kubernetes-sigs/metrics-server/pull/1908).
-
-The Security Profiles Operator is where it started, smaller: [AppArmorProfile owners in node status](https://github.com/kubernetes-sigs/security-profiles-operator/pull/1994), 2023.
-
+- **gVisor**: a wedged sandbox kept the shim lock forever → [30s deadlines on Kill, Stats, Status](https://github.com/google/gvisor/pull/14549)
+- **gVisor**: a missed systrap interrupt blocked teardown → [only the stuck subprocess dies](https://github.com/google/gvisor/pull/14201)
+- **gVisor**: a random memory gap put the spinning queue on a thread stack → [the queue moves with the gap](https://github.com/google/gvisor/pull/15573)
+- **gVisor**: the last indefinite waits → [in review](https://github.com/google/gvisor/pull/15194)
+- **SOCI**: fd leak on pod-start bursts → [close the Verify reader](https://github.com/awslabs/soci-snapshotter/pull/2043)
+- **metrics-server**: one slow scrape drops the whole node from `kubectl top` → [open](https://github.com/kubernetes-sigs/metrics-server/pull/1908)
+- **Security Profiles Operator**: [AppArmorProfile owners in node status](https://github.com/kubernetes-sigs/security-profiles-operator/pull/1994). The first one, 2023.
 ### prismantis
 
 [![prismantis](https://raw.githubusercontent.com/NahumLitvin/prismantis/main/docs/brand/banner.png)](https://github.com/NahumLitvin/prismantis)
