@@ -29,8 +29,8 @@ It started because I'd built a whole VS Code wrapper just to see mermaid diagram
 
 ### Latest posts
 
+- [7 articles in 4 years, then 10 in a month: the blog I kept not starting](https://www.catchkill9.dev/posts/catchkill9-wix-headless.html)
+- [Same day, two fixes: 5 days in one project, 175 in containerd](https://www.catchkill9.dev/posts/containerd-part-4-the-fix-lands.html)
 - [My fix for this hang was already running. The sandbox hung anyway.](https://www.catchkill9.dev/posts/gvisor-spinning-queue-gap.html)
-- [gVisor, a kernel in Go: what sits between untrusted code and Linux](https://www.catchkill9.dev/posts/intro-gvisor-a-kernel-in-go.html)
-- [STPA-inspired questions tied a plain checklist in my coding agent. Their one win: Claude asking about timing.](https://www.catchkill9.dev/posts/stpa-in-my-agent.html)
 
 [Blog](https://www.catchkill9.dev) · [LinkedIn](https://www.linkedin.com/in/lnahum/) · [dev.to](https://dev.to/nahumlitvin) · [RSS](https://www.catchkill9.dev/rss.xml)
