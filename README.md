@@ -17,6 +17,9 @@ Most hunts end like that: a fix upstream and a [write-up of how I found it](http
 - **SOCI**: fd leak on pod-start bursts → [close the Verify reader](https://github.com/awslabs/soci-snapshotter/pull/2043)
 - **metrics-server**: one slow scrape drops the whole node from `kubectl top` → [open](https://github.com/kubernetes-sigs/metrics-server/pull/1908)
 - **Security Profiles Operator**: [AppArmorProfile owners in node status](https://github.com/kubernetes-sigs/security-profiles-operator/pull/1994). The first one, 2023.
+
+![Notable contributions](/metrics.plugin.notable.svg)
+
 ### prismantis
 
 [![prismantis](https://raw.githubusercontent.com/NahumLitvin/prismantis/main/docs/brand/banner.png)](https://github.com/NahumLitvin/prismantis)
